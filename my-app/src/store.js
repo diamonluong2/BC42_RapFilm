@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+import OrderTicket from "./reducers/RapFilm";
 
 const store = configureStore({
   reducer: {
-    // countWin: countWin,
+    OrderTicket: OrderTicket,
   },
 });
 
