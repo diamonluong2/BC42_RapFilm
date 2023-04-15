@@ -1,18 +1,18 @@
 import React from "react";
-import ColChair from "./ColChair";
 import Table from "./Table";
+import Seat from "./Seat";
 
 function Order() {
   return (
-    <div className="background-img outside">
-      <div className="row">
+    <div className="background-img" style={{ minHeight: "100vh" }}>
+      <div className="row inside outside">
         <div className="col-8 px-3">
           <h1 className="text-warning text-center">
             ĐẶT VÉ XEM PHIM CYBERLEARN.VN
           </h1>
           <p className="text-white text-center">Màn hình</p>
           <div className="screen"></div>
-          <ColChair />
+          <Seat />
         </div>
         <div className="col-4">
           <h3 className="text-center text-light mt-3">
