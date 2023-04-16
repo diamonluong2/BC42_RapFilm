@@ -20,6 +20,7 @@ function OrderTicket(state = data, action) {
         }
         return item;
       });
+      console.log("danhSachGhe", danhSachGhe);
 
       const dsGhe = state.dsGhe.map((item) => {
         if (item.hang === action.hang) {
@@ -27,33 +28,56 @@ function OrderTicket(state = data, action) {
         }
         return item;
       });
+      console.log("dsGhe", dsGhe);
 
       const seatBooking = dsGhe[indexHang].danhSachGhe.find(
-        (item) => item.selected === true
+        (item) => item.soGhe === action.soGhe
       );
-      const selectedChair = [...state.selectedChair];
+      console.log("searBooking", seatBooking);
+      let selectedChair = [...state.selectedChair];
 
-      if (seatBooking.selected) {
+      if (seatBooking?.selected) {
         selectedChair.push(seatBooking);
       } else {
         const index = selectedChair.findIndex(
-          (item) => item.soGhe === seatBooking.soGhe
+          (item) => item.soGhe === action.soGhe
         );
+
+        // if (index !== -1) {
+        //   selectedChair = selectedChair.filter(
+        //     (item) => item.soGhe !== action.soGhe
+        //   );
+        // }
+
         console.log("index", index);
         selectedChair.splice(index, 1);
       }
       // selectedChair.filter((item) => {
       //   item.soGhe !== action.soGhe;
       // });
+      console.log("selected", selectedChair);
       return { ...state, dsGhe, selectedChair };
     }
-    // case "table/thanhtoan": {
-    //   const selectedChair = state.selectedChair.map((item) => {
-    //     return { ...item, daDat: true };
-    //   });
-    //   console.log("Thanh toán", selectedChair);
-    //   return { ...state, selectedChair };
-    // }
+    case "table/thanhtoan": {
+      const dsGhe = state.dsGhe.map((item) => {
+        const danhSachGhe = item.danhSachGhe.map((ghe) => {
+          if (ghe.selected) {
+            return { ...ghe, daDat: true, selected: false };
+          }
+          return ghe;
+        });
+        return { ...item, danhSachGhe };
+      });
+      const selectedChair = [];
+      //   const selectedChair = selectedPaying.map((item) => {
+      //     if (item.selected) {
+      //       return { ...item, daDat: true, selected: false };
+      //     }
+      //     return item;
+      //   });
+      console.log("Thanh toán");
+      return { ...state, dsGhe, selectedChair };
+    }
 
     default:
       return state;
